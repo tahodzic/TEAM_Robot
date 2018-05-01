@@ -39,8 +39,16 @@
 #include "BitIoLdd2.h"
 #include "SW1.h"
 #include "BitIoLdd3.h"
+#include "AS1.h"
+#include "ASerialLdd3.h"
+#include "FRTOS1.h"
+#include "RTOSCNTRLDD1.h"
+#include "TI1.h"
+#include "TimerIntLdd1.h"
+#include "TU1.h"
 #include "CLS1.h"
 #include "RTT1.h"
+#include "SYS1.h"
 #include "LED_IR.h"
 #include "LEDpin3.h"
 #include "BitIoLdd5.h"
@@ -58,14 +66,14 @@
 #include "IR6.h"
 #include "BitIoLdd11.h"
 #include "Q4CLeft.h"
-#include "C12.h"
+#include "C11.h"
 #include "BitIoLdd16.h"
 #include "C23.h"
 #include "BitIoLdd17.h"
 #include "Q4CRight.h"
-#include "C13.h"
+#include "C12.h"
 #include "BitIoLdd18.h"
-#include "C25.h"
+#include "C24.h"
 #include "BitIoLdd19.h"
 #include "MOTTU.h"
 #include "DIRL.h"
@@ -76,9 +84,6 @@
 #include "BitIoLdd13.h"
 #include "PWML.h"
 #include "PwmLdd3.h"
-#include "QuadInt.h"
-#include "TimerIntLdd2.h"
-#include "TU_QuadInt.h"
 #include "TMOUT1.h"
 #include "USB1.h"
 #include "CDC1.h"
@@ -88,6 +93,7 @@
 #include "MCUC1.h"
 #include "ADC_Bat.h"
 #include "TmDt1.h"
+#include "KIN2.h"
 #include "IFsh1.h"
 #include "IntFlashLdd1.h"
 #include "BUZ1.h"
@@ -122,9 +128,9 @@ void Cpu_OnNMIINT(void);
 
 /*
 ** ===================================================================
-**     Event       :  QuadInt_OnInterrupt (module Events)
+**     Event       :  TI1_OnInterrupt (module Events)
 **
-**     Component   :  QuadInt [TimerInt]
+**     Component   :  TI1 [TimerInt]
 **     Description :
 **         When a timer interrupt occurs this event is called (only
 **         when the component is enabled - <Enable> and the events are
@@ -134,7 +140,66 @@ void Cpu_OnNMIINT(void);
 **     Returns     : Nothing
 ** ===================================================================
 */
-void QuadInt_OnInterrupt(void);
+void TI1_OnInterrupt(void);
+
+void FRTOS1_vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName);
+/*
+** ===================================================================
+**     Event       :  FRTOS1_vApplicationStackOverflowHook (module Events)
+**
+**     Component   :  FRTOS1 [FreeRTOS]
+**     Description :
+**         if enabled, this hook will be called in case of a stack
+**         overflow.
+**     Parameters  :
+**         NAME            - DESCRIPTION
+**         pxTask          - Task handle
+**       * pcTaskName      - Pointer to task name
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void FRTOS1_vApplicationTickHook(void);
+/*
+** ===================================================================
+**     Event       :  FRTOS1_vApplicationTickHook (module Events)
+**
+**     Component   :  FRTOS1 [FreeRTOS]
+**     Description :
+**         If enabled, this hook will be called by the RTOS for every
+**         tick increment.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void FRTOS1_vApplicationIdleHook(void);
+/*
+** ===================================================================
+**     Event       :  FRTOS1_vApplicationIdleHook (module Events)
+**
+**     Component   :  FRTOS1 [FreeRTOS]
+**     Description :
+**         If enabled, this hook will be called when the RTOS is idle.
+**         This might be a good place to go into low power mode.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+
+void FRTOS1_vApplicationMallocFailedHook(void);
+/*
+** ===================================================================
+**     Event       :  FRTOS1_vApplicationMallocFailedHook (module Events)
+**
+**     Component   :  FRTOS1 [FreeRTOS]
+**     Description :
+**         If enabled, the RTOS will call this hook in case memory
+**         allocation failed.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
 
 /* END Events */
 
